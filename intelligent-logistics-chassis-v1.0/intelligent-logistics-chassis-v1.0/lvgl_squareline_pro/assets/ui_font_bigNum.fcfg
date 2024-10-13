@@ -1,0 +1,14 @@
+{
+  "codename": "bigNum",
+  "ttf_path": "\\assets\\AlimamaDaoLiTi.ttf",
+  "bin_path": "\\assets\\ui_font_bigNum.bin",
+  "c_path": "\\assets\\ui_font_bigNum.c",
+  "cfg_path": "\\assets\\ui_font_bigNum.fcfg",
+  "size": 85,
+  "bpp": 1,
+  "letters": 0,
+  "ranges": [],
+  "symbols": "123+-",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}

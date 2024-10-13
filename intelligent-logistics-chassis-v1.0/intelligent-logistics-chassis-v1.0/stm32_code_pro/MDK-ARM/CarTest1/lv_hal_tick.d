@@ -1,0 +1,8 @@
+cartest1\lv_hal_tick.o: ..\User\GUI\lvgl\src\hal\lv_hal_tick.c
+cartest1\lv_hal_tick.o: ..\User\GUI\lvgl\src\hal\lv_hal_tick.h
+cartest1\lv_hal_tick.o: ..\User\GUI\lvgl\src\hal\../lv_conf_internal.h
+cartest1\lv_hal_tick.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+cartest1\lv_hal_tick.o: ..\User\GUI\lvgl\src\hal\../lv_conf_kconfig.h
+cartest1\lv_hal_tick.o: ../User/GUI/lvgl/example/porting/../../lv_conf.h
+cartest1\lv_hal_tick.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+cartest1\lv_hal_tick.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h

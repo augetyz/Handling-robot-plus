@@ -1,0 +1,30 @@
+{
+  "motor_pid": {  //增量式pid
+    "kp": 200.0,
+    "ki": 300.0,
+    "kd": 0.0,
+    "out_max":100,
+    "bias_allow":0.0
+  },
+  "dtc_pid": {   //非pid控制方式
+    "kp": 1.0,   
+    "ki": 0.0,   
+    "kd": 1.0,    //起步加速度
+    "out_max":4.0, 
+    "bias_allow":0.05
+  },
+  "agl_pid": {   //位置式pid
+    "kp": 0.1,
+    "ki": 0.0,
+    "kd": 0.0,
+    "out_max":2,
+    "bias_allow":0.2
+  },
+  "pos_pid": {
+    "kp": 2.5,
+    "ki": 0.1,
+    "kd": 0.0,
+    "out_max":0.3,
+    "bias_allow":0.2
+  }
+}

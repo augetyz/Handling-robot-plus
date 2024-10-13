@@ -1,0 +1,33 @@
+{
+    "files.associations": {
+        "assert.h": "c",
+        "car_ctrl.h": "c",
+        "lcd.h": "c",
+        "stm32f4xx_hal_sram.h": "c",
+        "cmd_analyse.h": "c",
+        "common.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "lvgl.h": "c",
+        "m_shell.h": "c",
+        "my_log.h": "c",
+        "my_task.h": "c"
+    },
+    "MicroPython.executeButton": [
+        {
+            "text": "▶",
+            "tooltip": "运行",
+            "alignment": "left",
+            "command": "extension.executeFile",
+            "priority": 3.5
+        }
+    ],
+    "MicroPython.syncButton": [
+        {
+            "text": "$(sync)",
+            "tooltip": "同步",
+            "alignment": "left",
+            "command": "extension.execute",
+            "priority": 4
+        }
+    ]
+}

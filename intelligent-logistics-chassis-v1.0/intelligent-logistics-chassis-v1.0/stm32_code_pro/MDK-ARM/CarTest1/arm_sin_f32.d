@@ -1,0 +1,10 @@
+cartest1\arm_sin_f32.o: ..\Drivers\CMSIS\DSP\Source\FastMathFunctions\arm_sin_f32.c
+cartest1\arm_sin_f32.o: ..\Drivers\CMSIS\DSP\Include\arm_math.h
+cartest1\arm_sin_f32.o: ../Drivers/CMSIS/Include/core_cm4.h
+cartest1\arm_sin_f32.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+cartest1\arm_sin_f32.o: ../Drivers/CMSIS/Include/cmsis_version.h
+cartest1\arm_sin_f32.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+cartest1\arm_sin_f32.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+cartest1\arm_sin_f32.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
+cartest1\arm_sin_f32.o: D:\keil5\ARM\ARMCC\Bin\..\include\math.h
+cartest1\arm_sin_f32.o: ..\Drivers\CMSIS\DSP\Include\arm_common_tables.h

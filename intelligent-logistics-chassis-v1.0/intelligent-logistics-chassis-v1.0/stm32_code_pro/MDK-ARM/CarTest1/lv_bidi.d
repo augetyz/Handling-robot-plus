@@ -1,0 +1,17 @@
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\lv_bidi.c
+cartest1\lv_bidi.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\lv_bidi.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\../lv_conf_internal.h
+cartest1\lv_bidi.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\../lv_conf_kconfig.h
+cartest1\lv_bidi.o: ../User/GUI/lvgl/example/porting/../../lv_conf.h
+cartest1\lv_bidi.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\lv_txt.h
+cartest1\lv_bidi.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdarg.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\lv_area.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\../font/lv_font.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\../font/lv_symbol_def.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\lv_printf.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\lv_types.h
+cartest1\lv_bidi.o: ..\User\GUI\lvgl\src\misc\../misc/lv_mem.h
+cartest1\lv_bidi.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h

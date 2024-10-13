@@ -1,0 +1,10 @@
+cartest1\cjson.o: ..\User\cJson\cJSON.c
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\math.h
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\limits.h
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\ctype.h
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\float.h
+cartest1\cjson.o: ..\User\cJson\cJSON.h
+cartest1\cjson.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h
