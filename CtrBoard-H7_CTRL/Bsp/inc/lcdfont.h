@@ -423,6 +423,8 @@ const typFNT_GB12 tfont12[]={
 
 };
 
+
+
 typedef struct 
 {
 	unsigned char Index[2];	
@@ -542,6 +544,8 @@ const typFNT_GB32 tfont32[]={
 /* (32 X 32 , ËÎÌו )*/
 
 };
+
+
 
 #endif
 

@@ -1,7 +1,0 @@
-{
-  "param": "param.json",
-  "route": "route.json",
-  "arm":   "arm_0.json",
-  "arm_add":"arm_1.json",  //可选项, 如果arm_0.json够用, 则删除此项
-  "rgb":"rgb.json"
-}

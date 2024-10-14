@@ -64,3 +64,4 @@ ctrboard-h7_all\lcd_task.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb
 ctrboard-h7_all\lcd_task.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h
 ctrboard-h7_all\lcd_task.o: ../Core/Inc/spi.h
 ctrboard-h7_all\lcd_task.o: ../Bsp/inc/pic.h
+ctrboard-h7_all\lcd_task.o: ../Bsp/inc/typedef_user.h

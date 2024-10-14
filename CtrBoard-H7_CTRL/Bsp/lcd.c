@@ -752,12 +752,13 @@ void LCD_ShowPicture(uint16_t x,uint16_t y,uint16_t length,uint16_t width,const 
 	uint16_t i,j;
 	uint32_t k=0;
 	LCD_Address_Set(x,y,x+length-1,y+width-1);
-	for(i=0;i<length;i++)
+	for(i=0;i<width;i++)
 	{
-		for(j=0;j<width;j++)
+		for(j=0;j<length;j++)
 		{
-			LCD_WR_DATA8(pic[k*2]);
-			LCD_WR_DATA8(pic[k*2+1]);
+//			LCD_WR_DATA8(pic[k*2]);
+//			LCD_WR_DATA8(pic[k*2+1]);
+            LCD_DrawPoint(x+j-1,y+i-1,((uint16_t)pic[k*2]<<8)+pic[k*2+1]);
 			k++;
 		}
 	}			

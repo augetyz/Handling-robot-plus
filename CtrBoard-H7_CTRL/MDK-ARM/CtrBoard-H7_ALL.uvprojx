@@ -423,6 +423,11 @@
               <FileType>1</FileType>
               <FilePath>..\Bsp\w25q64.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_motor_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\bsp_motor_ctrl.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -3,6 +3,7 @@
 #include "cmsis_os.h"
 #include <string.h>  // 为了使用 memcpy
 extern SemaphoreHandle_t usbGetDataSemaphore;
+extern QueueHandle_t qrQueue;
 extern uint16_t USB_RX_DATA_SIZE;
 extern uint8_t UserRxBufferHS[2048];
 QR_code_date USB_date_deal_QR(uint8_t *date);
@@ -51,8 +52,8 @@ void UsbDataTask_Entry(void const * argument)
                             if (USB_RX_DATA_SIZE == 10) // 帧头(1)+帧类型(1)+长度(1)+数据(6)+帧尾(1) = 10字节
                             {
                                 qrCodeData = USB_date_deal_QR(UserRxBufferHS);
-                                // 处理 QR 码数据
-                                
+                                // 发送 QR 码数据
+                                xQueueSend(qrQueue, &qrCodeData, portMAX_DELAY);
                             }
                             break;
 

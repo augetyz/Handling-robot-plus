@@ -14,3 +14,10 @@ void MoveTask_Entry(void const * argument)
     osDelay(1);
   }
 }
+
+void motor_ctrl(uint8_t id,int16_t speed)
+{
+    
+}
+
+

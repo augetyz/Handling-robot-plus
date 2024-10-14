@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "typedef_user.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 SemaphoreHandle_t usbGetDataSemaphore;
-
+QueueHandle_t qrQueue;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId KeyTaskHandle;
@@ -160,6 +160,8 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+    //创建消息队列，最多存储 1 个 QR_code_date 数据
+    qrQueue = xQueueCreate(1, sizeof(QR_code_date));
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */

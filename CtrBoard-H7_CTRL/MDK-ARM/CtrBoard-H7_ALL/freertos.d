@@ -60,3 +60,4 @@ ctrboard-h7_all\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/t
 ctrboard-h7_all\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ctrboard-h7_all\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 ctrboard-h7_all\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+ctrboard-h7_all\freertos.o: ../Bsp/inc/typedef_user.h

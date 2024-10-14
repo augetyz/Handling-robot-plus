@@ -7,6 +7,7 @@
 "ctrboard-h7_all\bmi088middleware.o"
 "ctrboard-h7_all\can_bsp.o"
 "ctrboard-h7_all\w25q64.o"
+"ctrboard-h7_all\bsp_motor_ctrl.o"
 "ctrboard-h7_all\key_task.o"
 "ctrboard-h7_all\lcd_task.o"
 "ctrboard-h7_all\imu_task.o"

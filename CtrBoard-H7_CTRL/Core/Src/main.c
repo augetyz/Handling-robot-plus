@@ -240,9 +240,7 @@ int main(void)
   MX_TIM2_Init();
   MX_OCTOSPI2_Init();
   /* USER CODE BEGIN 2 */
-//    OSPI_W25Qxx_Init();     // ≥ı ºªØOSPI∫ÕW25Q64
-//    
-//    OSPI_W25Qxx_Test();     // Flash∂¡–¥≤‚ ‘
+
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
