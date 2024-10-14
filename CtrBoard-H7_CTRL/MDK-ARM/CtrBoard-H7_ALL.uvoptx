@@ -162,18 +162,34 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>47</LineNumber>
+          <LineNumber>80</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134290890</Address>
+          <Address>134293370</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\usb_date_task.c</Filename>
+          <Filename>..\Bsp\bsp_user_key.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\CtrBoard_H7_ALL\../App/usb_date_task.c\47</Expression>
+          <Expression>\\CtrBoard_H7_ALL\../Bsp/bsp_user_key.c\80</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>88</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\Bsp\bsp_user_key.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -201,6 +217,36 @@
           <count>4</count>
           <WinNumber>1</WinNumber>
           <ItemText>USB_RX_DATA_SIZE</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>key_up</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>key_down</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>key_mid</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>key_left</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>key_right</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>key_value,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

@@ -14,4 +14,5 @@ typedef enum
 }KeyState;
 
 int8_t BSP_UserKey_Detect(void);
+void get_key_adc(void);
 #endif
