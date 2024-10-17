@@ -56,7 +56,7 @@ void FunTest_Entry(void const * argument)
     for(;;)
     {    
         
-        fdcanx_send_data(&hfdcan2,0x100,tx_data, 8);
+        fdcanx_send_data(&hfdcan1,0x100,tx_data, 8);
         
         osDelay(100);
     }

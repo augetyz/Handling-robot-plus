@@ -28,25 +28,43 @@ void bsp_can_init(void)
 **/
 void can_filter_init(void)
 {
-	FDCAN_FilterTypeDef fdcan_filter;
-	
-	fdcan_filter.IdType = FDCAN_STANDARD_ID;                       //标准ID
-	fdcan_filter.FilterIndex = 0;                                  //滤波器索引                   
-	fdcan_filter.FilterType = FDCAN_FILTER_MASK;                   
-	fdcan_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;           //过滤器0关联到FIFO0  
-	fdcan_filter.FilterID1 = 0x00;                               
-	fdcan_filter.FilterID2 = 0x00;
+    FDCAN_FilterTypeDef fdcan_filter;
 
-	HAL_FDCAN_ConfigFilter(&hfdcan1,&fdcan_filter); 		 				  //接收ID2
-	//拒绝接收匹配不成功的标准ID和扩展ID,不接受远程帧
-	HAL_FDCAN_ConfigGlobalFilter(&hfdcan1,FDCAN_REJECT,FDCAN_REJECT,FDCAN_REJECT_REMOTE,FDCAN_REJECT_REMOTE);
-	HAL_FDCAN_ConfigFifoWatermark(&hfdcan1, FDCAN_CFG_RX_FIFO0, 1);
-//	HAL_FDCAN_ConfigFifoWatermark(&hfdcan1, FDCAN_CFG_RX_FIFO1, 1);
-//	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_TX_COMPLETE, FDCAN_TX_BUFFER0);
+    // 配置canfd1
+    fdcan_filter.IdType = FDCAN_EXTENDED_ID;                       // 扩展ID
+    fdcan_filter.FilterIndex = 0;                                  // 滤波器索引
+    fdcan_filter.FilterType = FDCAN_FILTER_MASK;                   
+    fdcan_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;           // 过滤器0关联到FIFO0
+    fdcan_filter.FilterID1 = 0x100;                                // 设置要接收的ID起始值 0x100
+    fdcan_filter.FilterID2 = 0x700;                                // 掩码为0x700，匹配范围为0x100到0xA00
+
+    HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_filter);               // 配置canfd1滤波器
+
+    // 配置canfd2
+    HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_filter);               // 配置canfd2滤波器
+
+    // 配置canfd3
+    HAL_FDCAN_ConfigFilter(&hfdcan3, &fdcan_filter);               // 配置canfd3滤波器
+
+    // 全局过滤设置为：拒绝标准ID，接受扩展ID并存入FIFO0，拒绝远程帧
+    HAL_FDCAN_ConfigGlobalFilter(&hfdcan1, FDCAN_REJECT, FDCAN_ACCEPT_IN_RX_FIFO0, FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE);
+    HAL_FDCAN_ConfigGlobalFilter(&hfdcan2, FDCAN_REJECT, FDCAN_ACCEPT_IN_RX_FIFO0, FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE);
+    HAL_FDCAN_ConfigGlobalFilter(&hfdcan3, FDCAN_REJECT, FDCAN_ACCEPT_IN_RX_FIFO0, FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE);
+
+    // 配置FIFO 0的水位线，当FIFO 0中有1条消息时触发中断
+    HAL_FDCAN_ConfigFifoWatermark(&hfdcan1, FDCAN_CFG_RX_FIFO0, 1);
+    HAL_FDCAN_ConfigFifoWatermark(&hfdcan2, FDCAN_CFG_RX_FIFO0, 1);
+    HAL_FDCAN_ConfigFifoWatermark(&hfdcan3, FDCAN_CFG_RX_FIFO0, 1);
+
+    // 可根据需要激活接收中断
+    // HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
+    // HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
+    // HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 }
+
 /**
 ************************************************************************
-* @brief:      	fdcanx_send_data(FDCAN_HandleTypeDef *hfdcan, uint16_t id, uint8_t *data, uint32_t len)
+* @brief:      	fdcanx_send_data(FDCAN_HandleTypeDef *hfdcan, uint32_t id, uint8_t *data, uint32_t len)
 * @param:       hfdcan：FDCAN句柄
 * @param:       id：CAN设备ID
 * @param:       data：发送的数据
@@ -55,13 +73,13 @@ void can_filter_init(void)
 * @details:    	发送数据
 ************************************************************************
 **/
-uint8_t fdcanx_send_data(hcan_t *hfdcan, uint16_t id, uint8_t *data, uint32_t len)
+uint8_t fdcanx_send_data(hcan_t *hfdcan, uint32_t id, uint8_t *data, uint32_t len)
 {	
     FDCAN_TxHeaderTypeDef fdcan_TxHeader;
     static uint8_t msgdata[10]={0};
     memcpy(msgdata,data,len);
     fdcan_TxHeader.Identifier=id;                      //32位ID
-    fdcan_TxHeader.IdType=FDCAN_STANDARD_ID;                  //标准ID
+    fdcan_TxHeader.IdType=FDCAN_EXTENDED_ID;                  //标准ID
     fdcan_TxHeader.TxFrameType=FDCAN_DATA_FRAME;              //数据帧
     fdcan_TxHeader.DataLength=FDCAN_DLC_BYTES_8;              //数据长度
     fdcan_TxHeader.ErrorStateIndicator=FDCAN_ESI_ACTIVE;            
@@ -83,7 +101,7 @@ uint8_t fdcanx_send_data(hcan_t *hfdcan, uint16_t id, uint8_t *data, uint32_t le
 * @details:    	接收数据
 ************************************************************************
 **/
-uint8_t fdcanx_receive(hcan_t *hfdcan, uint16_t *rec_id, uint8_t *buf)
+uint8_t fdcanx_receive(hcan_t *hfdcan, uint32_t *rec_id, uint8_t *buf)
 {	
 	FDCAN_RxHeaderTypeDef pRxHeader;
 	uint8_t len;
@@ -116,19 +134,19 @@ uint8_t fdcanx_receive(hcan_t *hfdcan, uint16_t *rec_id, uint8_t *buf)
 
 
 uint8_t rx_data1[8] = {0};
-uint16_t rec_id1;
+uint32_t rec_id1;
 void fdcan1_rx_callback(void)
 {
 	fdcanx_receive(&hfdcan1, &rec_id1, rx_data1);
 }
 uint8_t rx_data2[8] = {0};
-uint16_t rec_id2;
+uint32_t rec_id2;
 void fdcan2_rx_callback(void)
 {
 	fdcanx_receive(&hfdcan2, &rec_id2, rx_data2);
 }
 uint8_t rx_data3[8] = {0};
-uint16_t rec_id3;
+uint32_t rec_id3;
 void fdcan3_rx_callback(void)
 {
 	fdcanx_receive(&hfdcan3, &rec_id3, rx_data3);

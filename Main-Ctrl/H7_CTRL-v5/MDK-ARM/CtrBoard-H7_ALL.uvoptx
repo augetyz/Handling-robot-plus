@@ -162,9 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>150</LineNumber>
+          <LineNumber>140</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134231684</Address>
+          <Address>134292898</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,23 +173,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\Bsp\can_bsp.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\CtrBoard_H7_ALL\../Bsp/can_bsp.c\150</Expression>
+          <Expression>\\CtrBoard_H7_ALL\../Bsp/can_bsp.c\140</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>17</LineNumber>
+          <LineNumber>146</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134255792</Address>
+          <Address>134292926</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\move_task.c</Filename>
+          <Filename>..\Bsp\can_bsp.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\CtrBoard_H7_ALL\../App/move_task.c\17</Expression>
+          <Expression>\\CtrBoard_H7_ALL\../Bsp/can_bsp.c\146</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -247,6 +247,16 @@
           <count>10</count>
           <WinNumber>1</WinNumber>
           <ItemText>key_value,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rec_id1</ItemText>
+        </Ww>
+        <Ww>
+          <count>12</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rx_data1</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
