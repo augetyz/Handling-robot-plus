@@ -37,7 +37,7 @@ uint8_t tx_data[8] = {0,1,2,3,4,5,6,7};
 void FunTest_Entry(void const * argument)
 {
     /* USER CODE BEGIN FunTest_Entry */
-    can_bsp_init();
+    bsp_can_init();
     HAL_UART_Receive_IT(&huart1, u1Rx, U1_RX_LEN);
 //    HAL_UART_Receive_IT(&huart5, u5Rx, U5_RX_LEN);
     HAL_UART_Receive_IT(&huart7, u7Rx, U7_RX_LEN);
@@ -54,13 +54,11 @@ void FunTest_Entry(void const * argument)
     TIM1->CCR3 = 5000;                      // 50%Õ¼¿Õ±È
     /* Infinite loop */
     for(;;)
-    {      
-//        fdcanx_send_data(&hfdcan1, 0x520, tx_data, 8);
-//        osDelay(1);
-//        fdcanx_send_data(&hfdcan2, 0x520, tx_data, 8);
-//        osDelay(1);
-//        fdcanx_send_data(&hfdcan3, 0x50, tx_data, 8);
-        osDelay(10);
+    {    
+        
+        fdcanx_send_data(&hfdcan1,0x100,tx_data, 8);
+        
+        osDelay(100);
     }
     /* USER CODE END FunTest_Entry */
 }

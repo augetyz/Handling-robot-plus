@@ -182,7 +182,7 @@ void MX_FREERTOS_Init(void) {
   ImuTaskHandle = osThreadCreate(osThread(ImuTask), NULL);
 
   /* definition and creation of FunTest */
-  osThreadStaticDef(FunTest, FunTest_Entry, osPriorityBelowNormal, 0, 128, FunTestBuffer, &FunTestControlBlock);
+  osThreadStaticDef(FunTest, FunTest_Entry, osPriorityRealtime, 0, 128, FunTestBuffer, &FunTestControlBlock);
   FunTestHandle = osThreadCreate(osThread(FunTest), NULL);
 
   /* definition and creation of MoveTask */
