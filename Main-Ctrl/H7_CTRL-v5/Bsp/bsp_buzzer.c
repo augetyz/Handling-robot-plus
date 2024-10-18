@@ -20,5 +20,5 @@ void BSP_Buzzer_Off(void)
 
 void BSP_Buzzer_Toggle(void)
 {
-    buzzerSta == 1 ? BSP_Buzzer_Off():BSP_Buzzer_On();
+    buzzerSta == 1 ? BSP_Buzzer_Off() : BSP_Buzzer_On();
 }

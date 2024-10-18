@@ -114,10 +114,10 @@ static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
 
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
 {
-  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
-  *ppxIdleTaskStackBuffer = &xIdleStack[0];
-  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-  /* place for user code */
+    *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
+    *ppxIdleTaskStackBuffer = &xIdleStack[0];
+    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+    /* place for user code */
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
 
@@ -127,10 +127,10 @@ static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
 
 void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize )
 {
-  *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
-  *ppxTimerTaskStackBuffer = &xTimerStack[0];
-  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-  /* place for user code */
+    *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
+    *ppxTimerTaskStackBuffer = &xTimerStack[0];
+    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+    /* place for user code */
 }
 /* USER CODE END GET_TIMER_TASK_MEMORY */
 
@@ -140,78 +140,78 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, Stack
   * @retval None
   */
 void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
+    /* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
+    /* USER CODE END Init */
 
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
+    /* USER CODE BEGIN RTOS_MUTEX */
+    /* add mutexes, ... */
+    /* USER CODE END RTOS_MUTEX */
 
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
+    /* USER CODE BEGIN RTOS_SEMAPHORES */
+    /* add semaphores, ... */
     // 创建USB数据接受中断二值信号量
     usbGetDataSemaphore = xSemaphoreCreateBinary();
-  /* USER CODE END RTOS_SEMAPHORES */
+    /* USER CODE END RTOS_SEMAPHORES */
 
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
+    /* USER CODE BEGIN RTOS_TIMERS */
+    /* start timers, add new ones, ... */
+    /* USER CODE END RTOS_TIMERS */
 
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
+    /* USER CODE BEGIN RTOS_QUEUES */
+    /* add queues, ... */
     //创建消息队列，最多存储 1 个 QR_code_date 数据
     qrQueue = xQueueCreate(1, sizeof(QR_code_date));
-  /* USER CODE END RTOS_QUEUES */
+    /* USER CODE END RTOS_QUEUES */
 
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+    /* Create the thread(s) */
+    /* definition and creation of defaultTask */
+    osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+    defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of KeyTask */
-  osThreadStaticDef(KeyTask, KeyTask_Entry, osPriorityRealtime, 0, 128, KeyTaskBuffer, &KeyTaskControlBlock);
-  KeyTaskHandle = osThreadCreate(osThread(KeyTask), NULL);
+    /* definition and creation of KeyTask */
+    osThreadStaticDef(KeyTask, KeyTask_Entry, osPriorityRealtime, 0, 128, KeyTaskBuffer, &KeyTaskControlBlock);
+    KeyTaskHandle = osThreadCreate(osThread(KeyTask), NULL);
 
-  /* definition and creation of LcdTask */
-  osThreadStaticDef(LcdTask, LcdTask_Entry, osPriorityNormal, 0, 256, LcdTaskBuffer, &LcdTaskControlBlock);
-  LcdTaskHandle = osThreadCreate(osThread(LcdTask), NULL);
+    /* definition and creation of LcdTask */
+    osThreadStaticDef(LcdTask, LcdTask_Entry, osPriorityNormal, 0, 256, LcdTaskBuffer, &LcdTaskControlBlock);
+    LcdTaskHandle = osThreadCreate(osThread(LcdTask), NULL);
 
-  /* definition and creation of ImuTask */
-  osThreadStaticDef(ImuTask, ImuTask_Entry, osPriorityHigh, 0, 1024, ImuTaskBuffer, &ImuTaskControlBlock);
-  ImuTaskHandle = osThreadCreate(osThread(ImuTask), NULL);
+    /* definition and creation of ImuTask */
+    osThreadStaticDef(ImuTask, ImuTask_Entry, osPriorityHigh, 0, 1024, ImuTaskBuffer, &ImuTaskControlBlock);
+    ImuTaskHandle = osThreadCreate(osThread(ImuTask), NULL);
 
-  /* definition and creation of FunTest */
-  osThreadStaticDef(FunTest, FunTest_Entry, osPriorityRealtime, 0, 128, FunTestBuffer, &FunTestControlBlock);
-  FunTestHandle = osThreadCreate(osThread(FunTest), NULL);
+    /* definition and creation of FunTest */
+    osThreadStaticDef(FunTest, FunTest_Entry, osPriorityRealtime, 0, 128, FunTestBuffer, &FunTestControlBlock);
+    FunTestHandle = osThreadCreate(osThread(FunTest), NULL);
 
-  /* definition and creation of MoveTask */
-  osThreadStaticDef(MoveTask, MoveTask_Entry, osPriorityHigh, 0, 512, MoveTaskBuffer, &MoveTaskControlBlock);
-  MoveTaskHandle = osThreadCreate(osThread(MoveTask), NULL);
+    /* definition and creation of MoveTask */
+    osThreadStaticDef(MoveTask, MoveTask_Entry, osPriorityHigh, 0, 512, MoveTaskBuffer, &MoveTaskControlBlock);
+    MoveTaskHandle = osThreadCreate(osThread(MoveTask), NULL);
 
-  /* definition and creation of ArmCtrlTask */
-  osThreadStaticDef(ArmCtrlTask, ArmCtrlTask_Entry, osPriorityHigh, 0, 512, ArmCtrlTaskBuffer, &ArmCtrlTaskControlBlock);
-  ArmCtrlTaskHandle = osThreadCreate(osThread(ArmCtrlTask), NULL);
+    /* definition and creation of ArmCtrlTask */
+    osThreadStaticDef(ArmCtrlTask, ArmCtrlTask_Entry, osPriorityHigh, 0, 512, ArmCtrlTaskBuffer, &ArmCtrlTaskControlBlock);
+    ArmCtrlTaskHandle = osThreadCreate(osThread(ArmCtrlTask), NULL);
 
-  /* definition and creation of UsbDataTask */
-  osThreadStaticDef(UsbDataTask, UsbDataTask_Entry, osPriorityNormal, 0, 1024, UsbDataTaskBuffer, &UsbDataTaskControlBlock);
-  UsbDataTaskHandle = osThreadCreate(osThread(UsbDataTask), NULL);
+    /* definition and creation of UsbDataTask */
+    osThreadStaticDef(UsbDataTask, UsbDataTask_Entry, osPriorityNormal, 0, 1024, UsbDataTaskBuffer, &UsbDataTaskControlBlock);
+    UsbDataTaskHandle = osThreadCreate(osThread(UsbDataTask), NULL);
 
-  /* definition and creation of OrderTask */
-  osThreadStaticDef(OrderTask, OrderTask_Entry, osPriorityNormal, 0, 512, OrderTaskBuffer, &OrderTaskControlBlock);
-  OrderTaskHandle = osThreadCreate(osThread(OrderTask), NULL);
+    /* definition and creation of OrderTask */
+    osThreadStaticDef(OrderTask, OrderTask_Entry, osPriorityNormal, 0, 512, OrderTaskBuffer, &OrderTaskControlBlock);
+    OrderTaskHandle = osThreadCreate(osThread(OrderTask), NULL);
 
-  /* definition and creation of VisualTask */
-  osThreadStaticDef(VisualTask, VisualTask_Entry, osPriorityNormal, 0, 512, VisualTaskBuffer, &VisualTaskControlBlock);
-  VisualTaskHandle = osThreadCreate(osThread(VisualTask), NULL);
+    /* definition and creation of VisualTask */
+    osThreadStaticDef(VisualTask, VisualTask_Entry, osPriorityNormal, 0, 512, VisualTaskBuffer, &VisualTaskControlBlock);
+    VisualTaskHandle = osThreadCreate(osThread(VisualTask), NULL);
 
-  /* definition and creation of LogicTask */
-  osThreadStaticDef(LogicTask, LogicTask_Entry, osPriorityAboveNormal, 0, 512, LogicTaskBuffer, &LogicTaskControlBlock);
-  LogicTaskHandle = osThreadCreate(osThread(LogicTask), NULL);
+    /* definition and creation of LogicTask */
+    osThreadStaticDef(LogicTask, LogicTask_Entry, osPriorityAboveNormal, 0, 512, LogicTaskBuffer, &LogicTaskControlBlock);
+    LogicTaskHandle = osThreadCreate(osThread(LogicTask), NULL);
 
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
+    /* USER CODE BEGIN RTOS_THREADS */
+    /* add threads, ... */
+    /* USER CODE END RTOS_THREADS */
 
 }
 
@@ -224,15 +224,15 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void const * argument)
 {
-  /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
-  /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartDefaultTask */
+    /* init code for USB_DEVICE */
+    MX_USB_DEVICE_Init();
+    /* USER CODE BEGIN StartDefaultTask */
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
+    /* USER CODE END StartDefaultTask */
 }
 
 /* USER CODE BEGIN Header_MoveTask_Entry */
@@ -244,11 +244,11 @@ void StartDefaultTask(void const * argument)
 /* USER CODE END Header_MoveTask_Entry */
 __weak void MoveTask_Entry(void const * argument)
 {
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
 }
 
 /* USER CODE BEGIN Header_ArmCtrlTask_Entry */
@@ -260,11 +260,11 @@ __weak void MoveTask_Entry(void const * argument)
 /* USER CODE END Header_ArmCtrlTask_Entry */
 __weak void ArmCtrlTask_Entry(void const * argument)
 {
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
 }
 
 /* USER CODE BEGIN Header_UsbDataTask_Entry */
@@ -276,11 +276,11 @@ __weak void ArmCtrlTask_Entry(void const * argument)
 /* USER CODE END Header_UsbDataTask_Entry */
 __weak void UsbDataTask_Entry(void const * argument)
 {
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
 }
 
 /* USER CODE BEGIN Header_OrderTask_Entry */
@@ -292,11 +292,11 @@ __weak void UsbDataTask_Entry(void const * argument)
 /* USER CODE END Header_OrderTask_Entry */
 __weak void OrderTask_Entry(void const * argument)
 {
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
 }
 
 /* USER CODE BEGIN Header_VisualTask_Entry */
@@ -308,11 +308,11 @@ __weak void OrderTask_Entry(void const * argument)
 /* USER CODE END Header_VisualTask_Entry */
 __weak void VisualTask_Entry(void const * argument)
 {
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
 }
 
 /* USER CODE BEGIN Header_LogicTask_Entry */
@@ -324,11 +324,11 @@ __weak void VisualTask_Entry(void const * argument)
 /* USER CODE END Header_LogicTask_Entry */
 __weak void LogicTask_Entry(void const * argument)
 {
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
 }
 
 /* Private application code --------------------------------------------------*/

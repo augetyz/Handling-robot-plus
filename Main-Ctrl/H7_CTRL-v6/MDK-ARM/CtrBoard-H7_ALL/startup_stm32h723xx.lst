@@ -1257,13 +1257,13 @@ ARM Macro Assembler    Page 20
   615 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M7.fp.dp --depen
-d=ctrboard-h7_all\startup_stm32h723xx.d -octrboard-h7_all\startup_stm32h723xx.o
- -I../Core/Inc -I.\RTE\_CtrBoard-H7_ALL -ID:\keil5\ARM\CMSIS\5.7.0\CMSIS\Core\I
-nclude -ID:\keil5\Keil\STM32H7xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32H7xx\In
-clude --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 530" 
---predefine="_RTE_ SETA 1" --predefine="STM32H723xx SETA 1" --predefine="_RTE_ 
-SETA 1" --list=./ctrboard-h7_all/\startup_stm32h723xx.lst startup_stm32h723xx.s
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M7.fp.dp 
+--depend=ctrboard-h7_all\startup_stm32h723xx.d -octrboard-h7_all\startup_stm32h
+723xx.o -I../Core/Inc -I.\RTE\_CtrBoard-H7_ALL -ID:\keil5\ARM\CMSIS\6.1.0\CMSIS
+\Core\Include -ID:\keil5\Keil\STM32H7xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32
+H7xx\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SET
+A 540" --predefine="STM32H723xx SETA 1" --predefine="_RTE_ SETA 1" --list=./ctr
+board-h7_all/\startup_stm32h723xx.lst startup_stm32h723xx.s
 
 
 

@@ -8,15 +8,11 @@
 #include <string.h>
 
 #define U1_RX_LEN   5
-#define U5_RX_LEN   5
 #define U7_RX_LEN   5
 #define U10_RX_LEN   5
 
 uint8_t u1Rx[U1_RX_LEN];
 uint8_t u1RxFlag = 0;
-
-uint8_t u5Rx[U5_RX_LEN];
-uint8_t u5RxFlag = 0;
 
 uint8_t u7Rx[U7_RX_LEN];
 uint8_t u7RxFlag = 0;
@@ -25,7 +21,7 @@ uint8_t u10Rx[U10_RX_LEN];
 uint8_t u10RxFlag = 0;
 
 
-uint8_t tx_data[8] = {0,1,2,3,4,5,6,7};
+
 
 
 /* USER CODE BEGIN Header_FunTest_Entry */
@@ -37,9 +33,8 @@ uint8_t tx_data[8] = {0,1,2,3,4,5,6,7};
 void FunTest_Entry(void const * argument)
 {
     /* USER CODE BEGIN FunTest_Entry */
-    bsp_can_init();
+    
     HAL_UART_Receive_IT(&huart1, u1Rx, U1_RX_LEN);
-//    HAL_UART_Receive_IT(&huart5, u5Rx, U5_RX_LEN);
     HAL_UART_Receive_IT(&huart7, u7Rx, U7_RX_LEN);
     HAL_UART_Receive_IT(&huart10, u10Rx, U10_RX_LEN);
     
@@ -54,10 +49,7 @@ void FunTest_Entry(void const * argument)
     TIM1->CCR3 = 5000;                      // 50%Õ¼¿Õ±È
     /* Infinite loop */
     for(;;)
-    {    
-        
-        fdcanx_send_data(&hfdcan1,0x100,tx_data, 8);
-        
+    {            
         osDelay(100);
     }
     /* USER CODE END FunTest_Entry */
@@ -89,13 +81,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         }
         HAL_UART_Receive_IT(&huart10, u10Rx, U10_RX_LEN);
     }
-//    else if (huart == &huart5)
-//    {
-//        if (memcmp(u5Rx, "test\n", U5_RX_LEN) == 0)
-//        {
-//            u5RxFlag = 1;
-//        }
-//        HAL_UART_Receive_IT(&huart5, u5Rx, U5_RX_LEN);
-//    }
+
 }
 
