@@ -9,7 +9,12 @@ typedef struct {
     int32_t y;         // Y坐标，表示位置的垂直坐标
     float angle;      // 角度，表示当前位置的朝向（以弧度或度数表示）
 } position_order;
-
+typedef struct {
+    uint8_t speed_ctrl_status;
+    uint8_t position_ctrl_status;
+    int16_t speed;
+    int32_t position;
+}Motor_status;
 typedef struct {
     uint8_t QR_date[6]; // QR码数据，存储6个字节的QR码信息
 } QR_code_date;
@@ -34,6 +39,11 @@ typedef struct {
     uint8_t turntable_status;//物料台状态，1：红色 2：绿色 3：蓝色
 } Arm_ctrl_position;
 
+typedef struct {
+    uint16_t id;  // 消息ID
+    uint8_t data[8];  // 数据缓冲区
+    uint8_t len;  // 数据长度
+} can_message_t;
 
 
 #endif

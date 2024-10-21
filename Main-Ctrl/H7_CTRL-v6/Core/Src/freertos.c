@@ -47,6 +47,8 @@
 /* USER CODE BEGIN Variables */
 SemaphoreHandle_t usbGetDataSemaphore;
 QueueHandle_t qrQueue;
+QueueHandle_t can_queue;
+QueueHandle_t Move_task_queue;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId KeyTaskHandle;
@@ -162,6 +164,8 @@ void MX_FREERTOS_Init(void) {
     /* add queues, ... */
     //创建消息队列，最多存储 1 个 QR_code_date 数据
     qrQueue = xQueueCreate(1, sizeof(QR_code_date));
+	can_queue = xQueueCreate(16, sizeof(can_message_t));
+    Move_task_queue = xQueueCreate(16, sizeof(position_order));  
     /* USER CODE END RTOS_QUEUES */
 
     /* Create the thread(s) */

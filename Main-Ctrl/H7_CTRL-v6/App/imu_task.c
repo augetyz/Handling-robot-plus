@@ -85,7 +85,6 @@ void ImuTask_Entry(void const * argument)
     {
         osDelay(100);
     }
-    osDelay(1000);
     // пёв╪мсбщрг╣даЦф╚
     CalibrateGyroBias();
     

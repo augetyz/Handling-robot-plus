@@ -5,6 +5,11 @@
 
 #define hcan_t FDCAN_HandleTypeDef
 
+#define MOTOR_ID_1  0X0100
+#define MOTOR_ID_2  0X0200
+#define MOTOR_ID_3  0X0300
+#define MOTOR_ID_4  0X0400
+
 void bsp_can_init(void);
 void can_filter_init(void);
 uint8_t fdcanx_send_data(hcan_t *hfdcan, uint32_t id, uint8_t *data, uint32_t len);

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Ring Detection</title>
+    <style>
+        body { display: flex; flex-direction: column; align-items: center; }
+        .video-container { margin: 20px; }
+        img { width: 100%; max-width: 600px; }
+        .thresholds { margin-top: 20px; }
+        .images { display: flex; justify-content: space-around; width: 100%; max-width: 1200px; }
+        .image-box { text-align: center; }
+        .slider-container { display: flex; align-items: center; }
+        .slider-container label { width: 100px; }
+        .slider-container span { margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Color Ring Detection</h1>
+    <div class="video-container">
+        <h2>Video Stream</h2>
+        <img src="/video_feed/color" alt="Video Stream" id="video-stream">
+    </div>
+
+    <div class="images">
+        <div class="image-box">
+            <h2>Color Detection</h2>
+            <img src="/video_feed/color" alt="Color Detection" id="color-detection">
+        </div>
+        <div class="image-box">
+            <h2>Red Mask</h2>
+            <img src="/video_feed/red" alt="Red Mask" id="red-mask">
+        </div>
+        <div class="image-box">
+            <h2>Green Mask</h2>
+            <img src="/video_feed/green" alt="Green Mask" id="green-mask">
+        </div>
+        <div class="image-box">
+            <h2>Blue Mask</h2>
+            <img src="/video_feed/blue" alt="Blue Mask" id="blue-mask">
+        </div>
+    </div>
+
+    <div class="thresholds">
+        <h3>Adjust HSV Thresholds</h3>
+        <form id="thresholds-form">
+            <h3>Red</h3>
+            <div class="slider-container">
+                <label for="red_lower_h">Lower H:</label>
+                <input type="range" id="red_lower_h" name="red_lower_h" min="0" max="180" value="0" oninput="updateValue(this)">
+                <span id="red_lower_h_value">0</span>
+            </div>
+            <div class="slider-container">
+                <label for="red_lower_s">Lower S:</label>
+                <input type="range" id="red_lower_s" name="red_lower_s" min="0" max="255" value="100" oninput="updateValue(this)">
+                <span id="red_lower_s_value">100</span>
+            </div>
+            <div class="slider-container">
+                <label for="red_lower_v">Lower V:</label>
+                <input type="range" id="red_lower_v" name="red_lower_v" min="0" max="255" value="100" oninput="updateValue(this)">
+                <span id="red_lower_v_value">100</span>
+            </div>
+            <div class="slider-container">
+                <label for="red_upper_h">Upper H:</label>
+                <input type="range" id="red_upper_h" name="red_upper_h" min="0" max="180" value="10" oninput="updateValue(this)">
+                <span id="red_upper_h_value">10</span>
+            </div>
+            <div class="slider-container">
+                <label for="red_upper_s">Upper S:</label>
+                <input type="range" id="red_upper_s" name="red_upper_s" min="0" max="255" value="255" oninput="updateValue(this)">
+                <span id="red_upper_s_value">255</span>
+            </div>
+            <div class="slider-container">
+                <label for="red_upper_v">Upper V:</label>
+                <input type="range" id="red_upper_v" name="red_upper_v" min="0" max="255" value="255" oninput="updateValue(this)">
+                <span id="red_upper_v_value">255</span>
+            </div>
+
+            <h3>Green</h3>
+            <div class="slider-container">
+                <label for="green_lower_h">Lower H:</label>
+                <input type="range" id="green_lower_h" name="green_lower_h" min="0" max="180" value="40" oninput="updateValue(this)">
+                <span id="green_lower_h_value">40</span>
+            </div>
+            <div class="slider-container">
+                <label for="green_lower_s">Lower S:</label>
+                <input type="range" id="green_lower_s" name="green_lower_s" min="0" max="255" value="40" oninput="updateValue(this)">
+                <span id="green_lower_s_value">40</span>
+            </div>
+            <div class="slider-container">
+                <label for="green_lower_v">Lower V:</label>
+                <input type="range" id="green_lower_v" name="green_lower_v" min="0" max="255" value="40" oninput="updateValue(this)">
+                <span id="green_lower_v_value">40</span>
+            </div>
+            <div class="slider-container">
+                <label for="green_upper_h">Upper H:</label>
+                <input type="range" id="green_upper_h" name="green_upper_h" min="0" max="180" value="80" oninput="updateValue(this)">
+                <span id="green_upper_h_value">80</span>
+            </div>
+            <div class="slider-container">
+                <label for="green_upper_s">Upper S:</label>
+                <input type="range" id="green_upper_s" name="green_upper_s" min="0" max="255" value="255" oninput="updateValue(this)">
+                <span id="green_upper_s_value">255</span>
+            </div>
+            <div class="slider-container">
+                <label for="green_upper_v">Upper V:</label>
+                <input type="range" id="green_upper_v" name="green_upper_v" min="0" max="255" value="255" oninput="updateValue(this)">
+                <span id="green_upper_v_value">255</span>
+            </div>
+
+            <h3>Blue</h3>
+            <div class="slider-container">
+                <label for="blue_lower_h">Lower H:</label>
+                <input type="range" id="blue_lower_h" name="blue_lower_h" min="0" max="180" value="100" oninput="updateValue(this)">
+                <span id="blue_lower_h_value">100</span>
+            </div>
+            <div class="slider-container">
+                <label for="blue_lower_s">Lower S:</label>
+                <input type="range" id="blue_lower_s" name="blue_lower_s" min="0" max="255" value="150" oninput="updateValue(this)">
+                <span id="blue_lower_s_value">150</span>
+            </div>
+            <div class="slider-container">
+                <label for="blue_lower_v">Lower V:</label>
+                <input type="range" id="blue_lower_v" name="blue_lower_v" min="0" max="255" value="0" oninput="updateValue(this)">
+                <span id="blue_lower_v_value">0</span>
+            </div>
+            <div class="slider-container">
+                <label for="blue_upper_h">Upper H:</label>
+                <input type="range" id="blue_upper_h" name="blue_upper_h" min="0" max="180" value="140" oninput="updateValue(this)">
+                <span id="blue_upper_h_value">140</span>
+            </div>
+            <div class="slider-container">
+                <label for="blue_upper_s">Upper S:</label>
+                <input type="range" id="blue_upper_s" name="blue_upper_s" min="0" max="255" value="255" oninput="updateValue(this)">
+                <span id="blue_upper_s_value">255</span>
+            </div>
+            <div class="slider-container">
+                <label for="blue_upper_v">Upper V:</label>
+                <input type="range" id="blue_upper_v" name="blue_upper_v" min="0" max="255" value="255" oninput="updateValue(this)">
+                <span id="blue_upper_v_value">255</span>
+            </div>
+
+            <button type="button" onclick="updateThresholds()">Update Thresholds</button>
+        </form>
+    </div>
+
+    <!-- QR Code Detection Image Block -->
+    <div class="image-box" style="margin-top: 20px;">
+        <h2>QR Code Detection</h2>
+        <img src="/video_feed/qrcode" alt="QR Code Detection" id="qr-code-detection">
+    </div>
+
+    <script>
+        function updateValue(slider) {
+            const valueSpan = document.getElementById(slider.id + '_value');
+            valueSpan.textContent = slider.value;
+        }
+
+        function updateThresholds() {
+            const formData = new FormData(document.getElementById('thresholds-form'));
+            fetch('/update_thresholds', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

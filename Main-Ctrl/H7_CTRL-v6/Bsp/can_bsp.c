@@ -1,4 +1,6 @@
 #include "can_bsp.h"
+#include "typedef_user.h"
+#include "cmsis_os.h"
 #include <string.h>
 /**
 ************************************************************************
@@ -8,6 +10,8 @@
 * @details:     CAN 使能
 ************************************************************************
 **/
+
+extern QueueHandle_t can_queue;
 void bsp_can_init(void)
 {
     can_filter_init();
@@ -85,6 +89,7 @@ void can_filter_init(void)
 uint8_t fdcanx_send_data(hcan_t *hfdcan, uint32_t id, uint8_t *data,
                          uint32_t len)
 {
+
     FDCAN_TxHeaderTypeDef fdcan_TxHeader;
     static uint8_t msgdata[8] = {0};
     memcpy(msgdata, data, len);
@@ -97,10 +102,14 @@ uint8_t fdcanx_send_data(hcan_t *hfdcan, uint32_t id, uint8_t *data,
     fdcan_TxHeader.FDFormat = FDCAN_CLASSIC_CAN;              //传统的CAN模式
     fdcan_TxHeader.TxEventFifoControl = FDCAN_NO_TX_EVENTS;   //无发送事件
     fdcan_TxHeader.MessageMarker = 0;
-
-    HAL_FDCAN_AddMessageToTxFifoQ(hfdcan, &fdcan_TxHeader, msgdata);
-
-    return 1;
+    if( HAL_FDCAN_AddMessageToTxFifoQ(hfdcan, &fdcan_TxHeader, msgdata) != 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 /**
 ************************************************************************
@@ -111,10 +120,12 @@ uint8_t fdcanx_send_data(hcan_t *hfdcan, uint32_t id, uint8_t *data,
 * @details:     接收数据
 ************************************************************************
 **/
+
 uint8_t fdcanx_receive(hcan_t *hfdcan, uint32_t *rec_id, uint8_t *buf)
 {
     FDCAN_RxHeaderTypeDef pRxHeader;
     uint8_t len;
+    can_message_t message;
 
     if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &pRxHeader, buf) == HAL_OK)
     {
@@ -133,21 +144,58 @@ uint8_t fdcanx_receive(hcan_t *hfdcan, uint32_t *rec_id, uint8_t *buf)
             len = 32;
         if (pRxHeader.DataLength <= FDCAN_DLC_BYTES_48)
             len = 48;
-        if (pRxHeader.DataLength <= FDCAN_DLC_BYTES_64)
-            len = 64;
 
+        for (uint8_t i = 0; i < len; i++)
+        {
+            if(buf[0] > 0X30 && buf[0] < 0X40 || (buf[0] == 0XFF))
+            {
+                message.data[i] = buf[i];
+
+            }
+
+        }
+        if(message.data[0] > 0X30 && message.data[0] < 0X40 || (message.data[0] == 0XFF))
+        {
+            message.id = (*rec_id << 8);
+            message.id = (*rec_id);
+        }
+        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+        xQueueSendFromISR(can_queue, &message, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
         return len;//接收数据
     }
     return 0;
 }
-
-
+#define speed_post      0XF6
+#define RT_position     0X36
+#define RT_speed        0X35
+extern Motor_status motor[4];
+void rx_date_deal(uint32_t *rec_id, uint8_t *buf)
+{
+    switch(buf[0])
+    {
+        case speed_post:
+            motor[((*rec_id>>8)-1)].speed_ctrl_status=1;
+            break;
+        case RT_speed:
+            motor[((*rec_id>>8)-1)].speed=(buf[2]<<8)+buf[3];
+            if(buf[1]==1)
+                motor[((*rec_id>>8)-1)].speed*=-1;
+            break;
+        case RT_position:
+            motor[((*rec_id>>8)-1)].position=(buf[2]<<24)+(buf[3]<<16)+(buf[4]<<8)+buf[5];
+            if(buf[1]==1)
+                motor[((*rec_id>>8)-1)].position*=-1;
+            break;
+    }
+}
 
 uint8_t rx_data1[8] = {0};
 uint32_t rec_id1;
 void fdcan1_rx_callback(void)
 {
     fdcanx_receive(&hfdcan1, &rec_id1, rx_data1);
+    rx_date_deal(&rec_id1, rx_data1);
 }
 uint8_t rx_data2[8] = {0};
 uint32_t rec_id2;

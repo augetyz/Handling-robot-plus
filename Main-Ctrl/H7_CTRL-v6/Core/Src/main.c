@@ -240,7 +240,7 @@ int main(void)
     MX_TIM2_Init();
     MX_OCTOSPI2_Init();
     /* USER CODE BEGIN 2 */
-
+		HAL_Delay(2000);
     /* USER CODE END 2 */
 
     /* Call init function for freertos objects (in freertos.c) */
