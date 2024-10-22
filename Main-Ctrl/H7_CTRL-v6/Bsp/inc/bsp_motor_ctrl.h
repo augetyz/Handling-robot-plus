@@ -13,6 +13,7 @@ void sync_ctrl_speed(int16_t speed1,int16_t speed2, int16_t speed3, int16_t spee
 uint8_t acc_get(int16_t speed,uint16_t acc_time);                         
 uint8_t move_ctrl_dietance(int16_t x,int16_t y,uint16_t speed);
 uint8_t motor_stop();
+void motor_clean();
 typedef struct {
     float Kp;          // 比例增益
     float Ki;          // 积分增益

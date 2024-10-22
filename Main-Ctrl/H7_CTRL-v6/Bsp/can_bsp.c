@@ -145,23 +145,23 @@ uint8_t fdcanx_receive(hcan_t *hfdcan, uint32_t *rec_id, uint8_t *buf)
         if (pRxHeader.DataLength <= FDCAN_DLC_BYTES_48)
             len = 48;
 
-        for (uint8_t i = 0; i < len; i++)
-        {
-            if(buf[0] > 0X30 && buf[0] < 0X40 || (buf[0] == 0XFF))
-            {
-                message.data[i] = buf[i];
+//        for (uint8_t i = 0; i < len; i++)
+//        {
+//            if(buf[0] > 0X30 && buf[0] < 0X40 || (buf[0] == 0XFF))
+//            {
+//                message.data[i] = buf[i];
 
-            }
+//            }
 
-        }
-        if(message.data[0] > 0X30 && message.data[0] < 0X40 || (message.data[0] == 0XFF))
-        {
-            message.id = (*rec_id << 8);
-            message.id = (*rec_id);
-        }
-        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-        xQueueSendFromISR(can_queue, &message, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+//        }
+//        if(message.data[0] > 0X30 && message.data[0] < 0X40 || (message.data[0] == 0XFF))
+//        {
+//            message.id = (*rec_id << 8);
+//            message.id = (*rec_id);
+//        }
+//        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+//        xQueueSendFromISR(can_queue, &message, &xHigherPriorityTaskWoken);
+//        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
         return len;//接收数据
     }
     return 0;
@@ -179,13 +179,11 @@ void rx_date_deal(uint32_t *rec_id, uint8_t *buf)
             break;
         case RT_speed:
             motor[((*rec_id>>8)-1)].speed=(buf[2]<<8)+buf[3];
-            if(buf[1]==1)
-                motor[((*rec_id>>8)-1)].speed*=-1;
+            
             break;
         case RT_position:
             motor[((*rec_id>>8)-1)].position=(buf[2]<<24)+(buf[3]<<16)+(buf[4]<<8)+buf[5];
-            if(buf[1]==1)
-                motor[((*rec_id>>8)-1)].position*=-1;
+            
             break;
     }
 }

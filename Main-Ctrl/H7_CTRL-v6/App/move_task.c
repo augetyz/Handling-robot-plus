@@ -12,6 +12,8 @@
 extern float imuAngle[3];
 extern QueueHandle_t can_queue;
 extern QueueHandle_t Move_task_queue;
+extern SemaphoreHandle_t taskOK_Semaphore;
+
 enum {
     CAR_START,
     CAR_START1,
@@ -53,13 +55,15 @@ void MoveTask_Entry(void const * argument)
         {
             if (xQueueReceive(Move_task_queue,&Move_order,0) == pdTRUE)
             {
+                motor_clean();                
                 task_status=task_adjust(Move_order);                               
             }
         }
         if(task_status == task_OK)
         {
             //发送Move_task完成标志
-            
+            xSemaphoreGive(taskOK_Semaphore);
+
             task_status=task_nothing;
         }
         if(task_status==task_move)
@@ -74,9 +78,13 @@ void MoveTask_Entry(void const * argument)
             
         }
         can_read_four_motors(&hfdcan1,0X36,0X100);
-        osDelay(5);
+        osDelay(3);
         can_read_four_motors(&hfdcan1,0X36,0X300);
-        osDelay(5);
+        osDelay(3);
+        can_read_four_motors(&hfdcan1,0X35,0X100);
+        osDelay(3);
+        can_read_four_motors(&hfdcan1,0X35,0X300);
+        osDelay(3);
     }
 }
 

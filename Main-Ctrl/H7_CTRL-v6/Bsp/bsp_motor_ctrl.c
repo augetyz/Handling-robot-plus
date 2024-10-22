@@ -539,7 +539,7 @@ void sync_ctrl_speed(int16_t speed1,int16_t speed2, int16_t speed3, int16_t spee
     speed2 = -speed2;
     speed3 = -speed3;
     speed4 = speed4;
-    acceleration=acc_get(speed1,300);
+    acceleration=acc_get(abs(speed1)-abs(motor[0].speed),500);
     // 发送电机1速度控制命令
 
     motor_speed_control(&hfdcan1, MOTOR_ID_1, speed1, acceleration, sync_flag);
@@ -547,7 +547,7 @@ void sync_ctrl_speed(int16_t speed1,int16_t speed2, int16_t speed3, int16_t spee
 //    // 发送电机2速度控制命令
     motor_speed_control(&hfdcan1, MOTOR_ID_2, speed2, acceleration, sync_flag);
     osDelay(3);
-    acceleration=acc_get(speed3,300);
+    acceleration=acc_get(abs(speed3)-abs(motor[2].speed),500);
     // 发送电机3速度控制命令
     motor_speed_control(&hfdcan1, MOTOR_ID_3, speed3, acceleration, sync_flag);
     osDelay(3);
@@ -614,12 +614,15 @@ uint8_t acc_get(int16_t speed,uint16_t acc_time)
     uint8_t acc=0;
     acc=256-dert_t*20;
     if(speed==0)
-        return 0XE0;
+        return 0X0;
     return acc;
 }
-int32_t distance_dert=0;
+
 uint8_t move_ctrl_dietance(int16_t x,int16_t y,uint16_t speed)
 {
+    y*=1;
+    x*=1;
+    int32_t distance_dert=0;
     double distance=(uint16_t)sqrt((double)(x*x+y*y));
     double vx = speed * x/distance;
     double vy = speed * y/distance;
@@ -635,24 +638,46 @@ uint8_t move_ctrl_dietance(int16_t x,int16_t y,uint16_t speed)
         sync_ctrl_speed(w1,w2,-w3,-w4);
         sign=1;
     }
-    if(abs(w1)>=abs(w3))
+    if(x*y>0)
     {
         if(abs(x)>=abs(y))
-            distance_dert=x-(-1)*motor[0].position/65535*PI*76*x/distance;
+        {
+            if(x>0)
+                distance_dert=x-motor[0].position/65535*PI*76*x/distance;
+            else
+                distance_dert=(-1)*(x-motor[0].position/65535*PI*76*x/distance);
+        }
         else
-            distance_dert=y-(-1)*motor[0].position/65535*PI*76*y/distance;
+        {
+            if(y>0)
+                distance_dert=y-motor[0].position/65535*PI*76*y/distance;
+            else
+                distance_dert=(-1)*(y-motor[0].position/65535*PI*76*y/distance);
+        }
     }
-    else if(abs(w3)>abs(w1))
+    else 
     {
         if(abs(x)>=abs(y))
-            distance_dert=x-motor[2].position/65535*PI*76*x/distance;
+        {
+            if(x>0)
+                distance_dert=x-motor[2].position/65535*PI*76*x/distance;
+            else
+                distance_dert=(-1)*(x-motor[2].position/65535*PI*76*x/distance);
+        }
         else
-            distance_dert=y-motor[2].position/65535*PI*76*y/distance;
+        {
+            if(y>0)
+                distance_dert=y-motor[2].position/65535*PI*76*y/distance;
+            else
+                distance_dert=(-1)*(y-motor[2].position/65535*PI*76*y/distance);
+        }
     }  
-    if(abs(distance_dert)<100)
+    if(distance_dert<80)
     {
         sign=0;
+        w1=w2=w3=w4=0;
         sync_ctrl_speed(0,0,0,0);
+        osDelay(500);
         return 0;
     }
     else
@@ -704,5 +729,24 @@ int16_t read_motor_speed(FDCAN_HandleTypeDef *hfdcan,uint16_t motor_id)
     osDelay(2);
     return motor[((motor_id>>8)-1)].speed;
 }
+void motor_clean() {
+    uint8_t data[3];
+    uint8_t data2[4];
+    uint8_t checksum;
 
+    // 构建命令数据
+    data[0] = 0x0A;            
+    data[1] = 0x6D;            
+    data[2] = 0x6B;    
+
+    fdcanx_send_data(&hfdcan1, 0X100, data, 3);
+    osDelay(5);
+    fdcanx_send_data(&hfdcan1, 0X300, data, 3);
+    osDelay(5);
+    fdcanx_send_data(&hfdcan1, 0X200, data, 3);
+    osDelay(5);
+    fdcanx_send_data(&hfdcan1, 0X400, data, 3);
+    osDelay(5);
+
+}
 

@@ -1,6 +1,9 @@
 #include "usb_date_task.h"
 #include "typedef_user.h"
 #include "cmsis_os.h"
+#include "usbd_cdc_if.h"
+#include "usbd_core.h"
+#include "usbd_cdc.h"
 #include <string.h>  // 为了使用 memcpy
 extern SemaphoreHandle_t usbGetDataSemaphore;
 extern QueueHandle_t qrQueue;
@@ -172,3 +175,38 @@ color_block_position USB_date_deal_CB(uint8_t *date)
 
     return blockPos;
 }
+//控制opencv扫描二维码功能运行状态
+//1：使能 0：失能
+void QRscan_enable(uint8_t status)
+{
+    uint8_t buf='3';
+    if(status==0)
+    {
+        buf='4';
+        CDC_Transmit_HS(&buf,1);
+    } 
+    else
+    {
+        buf='3';
+        CDC_Transmit_HS(&buf,1);
+    }
+    
+}
+//控制opencv识别色环或者识别色块
+//1：色块 0：色环
+void Colorscan_enable(uint8_t status)
+{
+    uint8_t buf='0';
+    if(status==0)
+    {
+        buf='2';
+        CDC_Transmit_HS(&buf,1);
+    } 
+    else
+    {
+        buf='1';
+        CDC_Transmit_HS(&buf,1);
+    }
+    
+}
+

@@ -25,14 +25,17 @@ void KeyTask_Entry(void const * argument)
 {
     /* USER CODE BEGIN KeyTask_Entry */
     uint32_t RGB_num=0;
-    position_order Move_order={0};
+    
     BSP_Buzzer_Init();
     HAL_ADCEx_Calibration_Start(&hadc1, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED);
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adc_val,2);
     WS2812_Ctrl(100, 100, 100);
-    Move_order.x=000;
-    Move_order.y=1200;
+    position_order Move_order={0};
+    Move_order.x=600;
+    Move_order.y=200;
     Move_order.angle=0;
+  /* Infinite loop */
+    
     /* Infinite loop */
     for(;;)
     {
@@ -60,7 +63,7 @@ void KeyTask_Entry(void const * argument)
         if (key_mid==0)
         {
             WS2812_Ctrl(0,0,20);
-			xQueueSend(Move_task_queue,&Move_order,0);	  
+
         }
         if (key_left==0)
         {

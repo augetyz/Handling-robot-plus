@@ -162,9 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>635</LineNumber>
+          <LineNumber>670</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134329172</Address>
+          <Address>134330134</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,55 +173,39 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\Bsp\bsp_motor_ctrl.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\CtrBoard_H7_ALL\../Bsp/bsp_motor_ctrl.c\635</Expression>
+          <Expression>\\CtrBoard_H7_ALL\../Bsp/bsp_motor_ctrl.c\670</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>69</LineNumber>
+          <LineNumber>66</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134296992</Address>
+          <Address>134287572</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\move_task.c</Filename>
+          <Filename>..\App\key_task.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\CtrBoard_H7_ALL\../App/move_task.c\69</Expression>
+          <Expression>\\CtrBoard_H7_ALL\../App/key_task.c\66</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>63</LineNumber>
+          <LineNumber>681</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134296956</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\move_task.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\CtrBoard_H7_ALL\../App/move_task.c\63</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>656</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134329942</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>..\Bsp\bsp_motor_ctrl.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\CtrBoard_H7_ALL\../Bsp/bsp_motor_ctrl.c\656</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

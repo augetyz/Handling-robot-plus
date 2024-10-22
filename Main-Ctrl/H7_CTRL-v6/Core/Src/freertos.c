@@ -46,6 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 SemaphoreHandle_t usbGetDataSemaphore;
+SemaphoreHandle_t taskOK_Semaphore;
 QueueHandle_t qrQueue;
 QueueHandle_t can_queue;
 QueueHandle_t Move_task_queue;
@@ -154,6 +155,7 @@ void MX_FREERTOS_Init(void) {
     /* add semaphores, ... */
     // 创建USB数据接受中断二值信号量
     usbGetDataSemaphore = xSemaphoreCreateBinary();
+    taskOK_Semaphore    = xSemaphoreCreateBinary();
     /* USER CODE END RTOS_SEMAPHORES */
 
     /* USER CODE BEGIN RTOS_TIMERS */
@@ -165,7 +167,7 @@ void MX_FREERTOS_Init(void) {
     //创建消息队列，最多存储 1 个 QR_code_date 数据
     qrQueue = xQueueCreate(1, sizeof(QR_code_date));
 	can_queue = xQueueCreate(16, sizeof(can_message_t));
-    Move_task_queue = xQueueCreate(16, sizeof(position_order));  
+    Move_task_queue = xQueueCreate(1, sizeof(position_order));  
     /* USER CODE END RTOS_QUEUES */
 
     /* Create the thread(s) */
