@@ -9,22 +9,36 @@ typedef struct {
     int32_t y;         // Y坐标，表示位置的垂直坐标
     float angle;      // 角度，表示当前位置的朝向（以弧度或度数表示）
 } position_order;
+
 typedef struct {
     uint8_t speed_ctrl_status;
     uint8_t position_ctrl_status;
     int16_t speed;
     int32_t position;
 }Motor_status;
+
 typedef struct {
     uint8_t QR_date[6]; // QR码数据，存储6个字节的QR码信息
 } QR_code_date;
+
+typedef struct {
+    float Kp;          // 比例增益
+    float Ki;          // 积分增益
+    float Kd;          // 微分增益
+    float setpoint;    // 设定值
+    float last_error;  // 上一次的误差
+    float integral;    // 积分项
+    float output;      // 控制器输出
+    float output_max;
+    float output_min;
+} PIDController;
+
 
 typedef struct {
     int32_t x;         // X坐标，表示色环的位置的水平坐标
     int32_t y;         // Y坐标，表示色环的位置的垂直坐标
     uint8_t color;     // 表示色环的颜色 1：红色 2：绿色 3：蓝色
 } color_ring_position;
-
 typedef struct {
     int32_t x;         // X坐标，表示色块的位置的水平坐标
     int32_t y;         // Y坐标，表示色块的位置的垂直坐标

@@ -418,12 +418,12 @@ uint32_t merge_8bit_to_32bit(uint8_t data0, uint8_t data1, uint8_t data2, uint8_
 
     return result;
 }
-
-void PID_Init(PIDController *pid, float Kp, float Ki, float Kd, float setpoint) {
+extern PIDController pid_controller;
+void PID_Init(PIDController *pid, float Kp, float Ki, float Kd) {
     pid->Kp = Kp;
     pid->Ki = Ki;
     pid->Kd = Kd;
-    pid->setpoint = setpoint;
+    pid->setpoint = 0.0;
     pid->last_error = 0.0;
     pid->integral = 0.0;
     pid->output = 0.0;
@@ -467,13 +467,13 @@ float PID_Update(PIDController *pid, float measured_value, float dt) {
 }
 //R = 38
 
-void vPIDControlFunction() {
+uint8_t vPIDControlFunction(PIDController *pid,float setpoint) {
     static float last_time = 0.0f;
     static float current_time = 0.0f;
     float dt;
     float current_position = imuAngle[0];
     float control_signal;
-
+	pid->setpoint = setpoint;
     // 获取当前时间
     current_time = (float)xTaskGetTickCount() * portTICK_PERIOD_MS;
 
@@ -485,11 +485,25 @@ void vPIDControlFunction() {
     control_signal = PID_Update(&pid_controller, current_position, dt);
 
     // 设置小车速度
-    can_sync_control_four_motors(&hfdcan1, control_signal, -control_signal, -control_signal, control_signal);
+    sync_ctrl_speed(control_signal, -control_signal, -control_signal, control_signal);
 
     // 更新上次时间
     last_time = current_time;
+	if(((imuAngle[0] - pid_controller.setpoint) <= 0.1 ) && ((imuAngle[0] - pid_controller.setpoint) >= -0.1 ))
+    {
+        sync_ctrl_speed(0,0,0,0);
+        osDelay(500);
+        return 0;
+    }
+	else
+    return 1;
 }
+
+
+
+
+
+
 
 
 

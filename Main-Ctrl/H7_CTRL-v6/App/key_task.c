@@ -45,12 +45,10 @@ void KeyTask_Entry(void const * argument)
             BSP_Buzzer_On();
         }
         get_key_adc();
-        
         if (BSP_UserKey_Detect() == BUTTON_PRESSED)
         {
             AHRS_init(imuQuat);
         }
-        
         if (key_up==0)
         {
             WS2812_Ctrl(20,0,0);

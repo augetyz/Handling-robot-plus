@@ -51,4 +51,5 @@ ctrboard-h7_all/logic_task.o: ..\App\logic_task.c ..\App\inc\logic_task.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
-  ..\Bsp\inc\typedef_user.h ..\App\inc\usb_date_task.h
+  ..\Bsp\inc\typedef_user.h ..\App\inc\usb_date_task.h ..\Bsp\inc\lcd.h \
+  ..\Core\Inc\spi.h

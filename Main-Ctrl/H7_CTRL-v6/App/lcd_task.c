@@ -6,6 +6,7 @@
 extern float vbus;
 extern float imuAngle[3];
 extern QueueHandle_t qrQueue;
+extern SemaphoreHandle_t taskOK_Semaphore;
 void show_QR(QR_code_date date);
 
 /* USER CODE BEGIN Header_LcdTask_Entry */
@@ -40,6 +41,7 @@ void LcdTask_Entry(void const * argument)
         if (xQueueReceive(qrQueue, &QR_num, 0) == pdPASS) {
             // 处理接收到的QR码数据
             show_QR(QR_num);
+            xSemaphoreGive(taskOK_Semaphore);
         }
     }
     /* USER CODE END LcdTask_Entry */

@@ -34,7 +34,7 @@ void MoveTask_Entry(void const * argument)
     uint8_t move_later;
     uint8_t motor_sign = 0;
     uint8_t tx_data[4] = {0X36,0X6B};
-    
+
     can_message_t message;
     /**初始化变量**/
     position_order Move_order={0};
@@ -42,7 +42,7 @@ void MoveTask_Entry(void const * argument)
     
     /**初始化驱动**/
     bsp_can_init();
-    PID_Init(&pid_controller, 5, 0.01, 0, 0);
+    PID_Init(&pid_controller, 5, 0.01, 0);
     /* Infinite loop */
     osDelay(2000);
 
@@ -75,7 +75,10 @@ void MoveTask_Entry(void const * argument)
         }
         if(task_status==task_angle)
         {
-            
+            if(vPIDControlFunction(&pid_controller, Move_order.angle)==0)
+            {
+                task_status = task_OK;
+            }    
         }
         can_read_four_motors(&hfdcan1,0X36,0X100);
         osDelay(3);
